@@ -1,6 +1,6 @@
 #!/bin/sh
-yes | apt update
-yes | apt install zsh curl git fonts-hack-ttf tmux
+yes | apt-get update
+yes | apt-get install zsh curl git fonts-hack-ttf tmux
 curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 
 export ZSH="$HOME/.oh-my-zsh"

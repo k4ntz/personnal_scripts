@@ -1,0 +1,5 @@
+av_sinks=( $( pactl list sinks | grep Sink | cut -d "#" -f 2 ) )
+for i in "${av_sinks[@]}"
+do
+	pactl set-sink-volume $i -2%
+done
