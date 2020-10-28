@@ -55,7 +55,8 @@ set $base0F #fcc09e
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
-bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -fullscreen -padding 200 -opacity "80" -bw 0 -bc "$base01" -bg "$base02" -fg "$base07" -hlbg "$base05" -columns 1 -font "System San Francisco Display 18" -hlfg "#9575cd"
+#bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -fullscreen -padding 200 -opacity "80" -bw 0 -bc "$base01" -bg "$base02" -fg "$base07" -hlbg "$base05" -columns 1 -font "System San Francisco Display 18" -hlfg "#9575cd"
+bindsym $mod+d exec --no-startup-id "rofi -show drun -config ~/.config/i3/rofi"
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -117,11 +118,12 @@ bindsym $mod+p focus parent
 #bindsym $mod+d focus child
 
 
-set $workspace1 "1: Firefox "
+set $workspace1 "1: Firefox2 "
 set $workspace2 "2: Editor "
 set $workspace3 "3: Terminal "
-set $workspace5 "5: Vrep "
-set $workspace4 "4: Social "
+set $workspace4 "4: Ranger "
+set $workspace5 "6: VREP "
+set $workspace5 "5: Social "
 set $workspace10 "10: Music "
 
 # switch to workspace
@@ -180,12 +182,12 @@ assign [class="Firefox"] $workspace1
 assign [class="Atom"] $workspace2
 assign [class="Code"] $workspace2
 assign [class="Gnome-terminal"] $workspace3
-assign [class="V-REP"] $workspace5
-assign [class="rviz"] $workspace5
-assign [class="joint_state_publisher"] $workspace5
-assign [class="gazeb"] $workspace5
-assign [class="gazebo"] $workspace5
-assign [class="Mattermost"] $workspace4
+assign [class="V-REP"] $workspace6
+assign [class="rviz"] $workspace6
+assign [class="joint_state_publisher"] $workspace6
+assign [class="gazeb"] $workspace6
+assign [class="gazebo"] $workspace6
+assign [class="Mattermost"] $workspace5
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -239,7 +241,8 @@ bindsym $mod+r mode "resize"
 bar {
     font pango:DejaVu Sans Mono, FontAwesome 10
     position top
-    status_command ~/bin/i3status-rs ~/.config/i3/status.toml
+    # status_command ~/bin/i3status-rs ~/.config/i3/status.toml
+    status_command i3blocks -c ~/.config/i3/i3blocks/config
     colors {
         separator #666666
         background #222222
