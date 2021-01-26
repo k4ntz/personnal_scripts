@@ -5,7 +5,7 @@ if [ "$EUID" -ne 0 ]
 fi
 
 # Install status bar
-sudo apt-get install -y i3 cargo libdbus-1-dev i3blocks rofi compton nitrogen xdotool dunst
+sudo apt-get install -y i3 cargo libdbus-1-dev i3blocks rofi compton nitrogen xdotool dunst feh
 mkdir -p ~/bin
 git clone https://github.com/greshake/i3status-rust ~/bin/i3status-rust
 cp -r sound i3 ~/.config
