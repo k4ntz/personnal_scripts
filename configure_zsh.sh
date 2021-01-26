@@ -13,6 +13,9 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~
 cp .p10k.zsh ~/.p10k.zsh
 cp .zshrc ~/.zshrc
 cp -r nvim ~/.config/
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 chsh -s $(which zsh)
 echo set-option -g default-shell /bin/zsh >> ~/.tmux.conf
 zsh
+echo "Please log out and log it for zsh to be your new default bash"
