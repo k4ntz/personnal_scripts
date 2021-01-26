@@ -12,6 +12,7 @@ git clone https://github.com/Treri/fzf-zsh.git ${ZSH}/custom/plugins/fzf-zsh
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 cp .p10k.zsh ~/.p10k.zsh
 cp .zshrc ~/.zshrc
+cp -r nvim ~/.config/
 chsh -s $(which zsh)
 echo set-option -g default-shell /bin/zsh >> ~/.tmux.conf
 zsh
