@@ -1,4 +1,9 @@
 #!/bin/sh
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
 # Install status bar
 sudo apt-get install -y i3 cargo libdbus-1-dev i3blocks rofi compton nitrogen xdotool dunst
 git clone https://github.com/greshake/i3status-rust
