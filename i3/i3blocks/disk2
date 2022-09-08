@@ -1,0 +1,5 @@
+#!/bin/sh
+
+DIR=/media/quentin/storer/home_exts/OSR
+
+df -hT $DIR | awk 'FNR == 2 {print $5 }'

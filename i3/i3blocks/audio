@@ -1,0 +1,6 @@
+#!/bin/bash
+if pacmd list-cards | grep 'active profile' | grep 'output:iec958-stereo' > /dev/null ; then
+    echo ""
+else
+    echo ""
+fi
