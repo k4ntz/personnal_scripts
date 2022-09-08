@@ -32,8 +32,13 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# swap audio device
+bindsym $mod+BackSpace exec bash swap.bash; restart
+
 # kill focused window
 bindsym $mod+Shift+q kill
+
+bindsym $mod+t exec i3-msg title_format `zenity --title="i3-msg title_format" --text "Enter a title" --entry)`
 
 
 set $base00 #101218
@@ -98,7 +103,12 @@ bindsym $mod+h split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle
+
+# open ranger and go to it
+bindsym $mod+f workspace $workspace4; exec nautilus
+
+# for_window [urgent="latest"] focus
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -121,7 +131,7 @@ bindsym $mod+p focus parent
 set $workspace1 "1: Firefox "
 set $workspace2 "2: Editor "
 set $workspace3 "3: Terminal "
-set $workspace4 "4: Ranger "
+set $workspace4 "4: Files "
 set $workspace5 "5: Social "
 set $workspace6 "6: Zoom "
 set $workspace7 "7: Scheduler "
@@ -182,14 +192,16 @@ bindsym $mod+Shift+0 move container to workspace $workspace10
 assign [class="Firefox"] $workspace1
 assign [class="Atom"] $workspace2
 assign [class="Code"] $workspace2
-assign [class="Gnome-terminal"] $workspace3
+#assign [class="Gnome-terminal"] $workspace3
 assign [class="V-REP"] $workspace6
 assign [class="rviz"] $workspace6
 assign [class="joint_state_publisher"] $workspace6
 assign [class="gazeb"] $workspace6
 assign [class="gazebo"] $workspace6
 assign [class="Mattermost"] $workspace5
+assign [class="Slack"] $workspace5
 assign [class="zoom"] $workspace6
+assign [class="Nautilus"] $workspace4
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -198,19 +210,19 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-bindsym $mod+Shift+e mode "Exit"
 
-# Exit i3 in various ways.
+# Create Log out, Reboot, Poweroff bindings
+mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
+        bindsym $mod+r exec systemctl reboot
+        bindsym $mod+l exit
+        bindsym $mod+p exec systemctl poweroff
 
-mode "Exit" {
-    bindsym h exec "/sbin/shutdown -h now"
-    bindsym r exec "/sbin/shutdown -r now"
-    bindsym x exit
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
 }
+
+bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -258,12 +270,12 @@ bar {
 
 bindsym $mod+shift+x exec i3lock-fancy -p
 
-bindsym $mod+g exec firefox
+bindsym $mod+g exec brave-browser
 bindsym $mod+a exec atom
 bindsym $mod+b exec blueman-manager
 bindsym $mod+m exec mattermost-desktop
+bindsym $mod+n exec Nautilus
 bindsym Print exec gnome-screenshot -i
-bindysm $mod+t exec thunar
 
 exec_always feh --bg-scale ~/Pictures/Wallpapers/wpp.jpg
 exec_always setxkbmap -layout fr,fr
@@ -281,9 +293,17 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
+bindsym --release $mod+k exec xkill
+
+
 
 for_window [class="matplotlib"] floating enable
-for_window [class="Matplotlib"] floating enable
+for_window [class="Tk"] floating enable
+for_window [class="Toplevel"] floating enable
+#for_window [class="Matplotlib"] floating enable
+for_window [class="gpick"] floating enable
+for_window [class="Gpick"] floating enable
+for_window [class="Gpick"] resize set 640 480
 
 
 # i3 gaps
@@ -293,3 +313,4 @@ gaps outer 4
 
 # Compton
 exec_always --no-startup-id "killall -q compton; compton --config ~/.config/i3/compton.conf"
+exec_always --no-startup-id xcompmgr -c -l0 -t0 -r0 -o.00
