@@ -32,13 +32,8 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
-# swap audio device
-bindsym $mod+BackSpace exec bash swap.bash; restart
-
 # kill focused window
 bindsym $mod+Shift+q kill
-
-bindsym $mod+t exec i3-msg title_format `zenity --title="i3-msg title_format" --text "Enter a title" --entry)`
 
 
 set $base00 #101218
@@ -85,10 +80,30 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+m move right
+#bindsym $mod+Shift+j move left
+#bindsym $mod+Shift+k move down
+#bindsym $mod+Shift+l move up
+#bindsym $mod+Shift+m move right
+
+bindsym $mod+Shift+m mode "move" focus floating
+mode "move" {
+    bindsym $mod+Tab focus right
+
+    bindsym Left  move left
+    bindsym Down  move down
+    bindsym Up    move up
+    bindsym Right move right
+
+    bindsym h     move left
+    bindsym j     move down
+    bindsym k     move up
+    bindsym l     move right
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -103,12 +118,8 @@ bindsym $mod+h split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+Shift+f fullscreen toggle
-
-# open ranger and go to it
 bindsym $mod+f workspace $workspace4; exec nautilus
-
-# for_window [urgent="latest"] focus
+bindsym $mod+Shift+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -131,7 +142,7 @@ bindsym $mod+p focus parent
 set $workspace1 "1: Firefox "
 set $workspace2 "2: Editor "
 set $workspace3 "3: Terminal "
-set $workspace4 "4: Files "
+set $workspace4 "4: Ranger "
 set $workspace5 "5: Social "
 set $workspace6 "6: Zoom "
 set $workspace7 "7: Scheduler "
@@ -207,6 +218,11 @@ assign [class="Nautilus"] $workspace4
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
+
 
 # Create Log out, Reboot, Poweroff bindings
 mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
@@ -218,8 +234,6 @@ mode "Exit (L)ogout, (R)eboot, (P)oweroff" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
-bindsym $mod+Shift+e mode "Exit (L)ogout, (R)eboot, (P)oweroff"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -290,14 +304,15 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-bindsym --release $mod+k exec xkill
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec --no-startup-id bash ~/.config/i3/bright + # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id bash ~/.config/i3/bright - # decrease screen brightness
 
+# Touchpad controls
+#bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
 
-
-for_window [class="matplotlib"] floating enable
-for_window [class="Tk"] floating enable
-for_window [class="Toplevel"] floating enable
-#for_window [class="Matplotlib"] floating enable
+for_window [class="matplotlib"] floating enable move position center
+for_window [class="Matplotlib"] floating enable move position center
 for_window [class="gpick"] floating enable
 for_window [class="Gpick"] floating enable
 for_window [class="Gpick"] resize set 640 480
